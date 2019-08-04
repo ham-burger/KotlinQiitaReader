@@ -7,7 +7,7 @@ import retrofit2.http.Query
 class ItemWebApi {
     interface Request {
         @GET("items.json")
-        fun get(@Query("page") page: Int): Observable<List<ItemsDTO>>
+        fun get(@Query("page") page: Int): Observable<List<ItemDTO>>
     }
 
     val request: Request

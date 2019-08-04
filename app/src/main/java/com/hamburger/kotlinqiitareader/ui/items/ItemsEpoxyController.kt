@@ -1,16 +1,15 @@
 package com.hamburger.kotlinqiitareader.ui.items
 
-import com.airbnb.epoxy.TypedEpoxyController
-import com.hamburger.kotlinqiitareader.itemCell
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
+import com.hamburger.kotlinqiitareader.ItemCellBindingModel_
+import com.hamburger.kotlinqiitareader.service.ItemDTO
 
 class ItemsEpoxyController(
-) : TypedEpoxyController<List<String>>() {
-    override fun buildModels(data: List<String>?) {
-        data?.forEach {
-            itemCell {
-                title(it)
-                id(modelCountBuiltSoFar)
-            }
-        }
+) : PagedListEpoxyController<ItemDTO>() {
+    override fun buildItemModel(currentPosition: Int, item: ItemDTO?): EpoxyModel<*> {
+        return ItemCellBindingModel_()
+            .title(item?.title ?: "")
+            .id("item$currentPosition")
     }
 }

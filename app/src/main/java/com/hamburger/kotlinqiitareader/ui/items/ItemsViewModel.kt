@@ -1,23 +1,30 @@
 package com.hamburger.kotlinqiitareader.ui.items
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.hamburger.kotlinqiitareader.extension.observeOnMainThread
-import com.hamburger.kotlinqiitareader.extension.subscribeOnIOThread
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.hamburger.kotlinqiitareader.service.ItemDTO
 import com.hamburger.kotlinqiitareader.service.ItemWebApi
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import com.hamburger.kotlinqiitareader.service.paging.ItemsDataSourceFactory
+import com.hamburger.kotlinqiitareader.service.paging.NetworkState
 
 class ItemsViewModel : ViewModel() {
-    private var compositeDisposable = CompositeDisposable()
-    val data = MutableLiveData<List<String>>()
-    fun load() {
-        ItemWebApi().request.get(1)
-            .subscribeOnIOThread()
-            .observeOnMainThread()
-            .subscribe {
-                data.value = it.map { it.id }
-            }
-            .addTo(compositeDisposable)
+    companion object {
+        private const val PAGE_SIZE = 50
+    }
+
+    var data: LiveData<PagedList<ItemDTO>>
+    val networkState: LiveData<NetworkState>
+
+    init {
+        val factory = ItemsDataSourceFactory(ItemWebApi())
+        val config = PagedList.Config.Builder()
+            .setInitialLoadSizeHint(PAGE_SIZE)
+            .setPageSize(PAGE_SIZE)
+            .build()
+
+        data = LivePagedListBuilder(factory, config).build()
+        networkState = factory.source.networkState
     }
 }

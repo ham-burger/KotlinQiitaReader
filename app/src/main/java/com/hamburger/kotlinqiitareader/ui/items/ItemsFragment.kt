@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ItemsFragmentBinding
+import timber.log.Timber
 
 class ItemsFragment : Fragment() {
 
@@ -32,7 +33,6 @@ class ItemsFragment : Fragment() {
         return inflater.inflate(R.layout.items_fragment, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ItemsFragmentBinding.bind(view)
@@ -40,15 +40,16 @@ class ItemsFragment : Fragment() {
         if (binding.recyclerView.layoutManager == null) {
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
         }
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ItemsViewModel::class.java)
         viewModel.data.observe(this, Observer {
-            controller.setData(it)
+            controller.submitList(it)
         })
-        viewModel.load()
+        viewModel.networkState.observe(this, Observer {
+            Timber.d("state : ${it.name}")
+        })
     }
 }
