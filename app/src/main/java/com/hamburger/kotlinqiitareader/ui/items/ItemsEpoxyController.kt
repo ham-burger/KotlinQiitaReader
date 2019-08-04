@@ -4,11 +4,11 @@ import com.airbnb.epoxy.TypedEpoxyController
 import com.hamburger.kotlinqiitareader.itemCell
 
 class ItemsEpoxyController(
-) : TypedEpoxyController<List<Int>>() {
-    override fun buildModels(data: List<Int>?) {
+) : TypedEpoxyController<List<String>>() {
+    override fun buildModels(data: List<String>?) {
         data?.forEach {
             itemCell {
-                title(it.toString())
+                title(it)
                 id(modelCountBuiltSoFar)
             }
         }

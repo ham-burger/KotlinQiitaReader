@@ -49,5 +49,6 @@ class ItemsFragment : Fragment() {
         viewModel.data.observe(this, Observer {
             controller.setData(it)
         })
+        viewModel.load()
     }
 }
