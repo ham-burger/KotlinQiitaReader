@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
-                name="title"
-                type="String"
-        />
+            name="item"
+            type="com.hamburger.kotlinqiitareader.service.ItemDTO" />
+
+        <variable
+            name="delegate"
+            type="com.hamburger.kotlinqiitareader.ui.items.ItemsDelegate" />
     </data>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-    >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{() -> delegate.onClickItem(item)}"
+        android:orientation="vertical"
+        android:padding="8dp">
+
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{title}"
-                tools:text="タイトル"
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.id}"
+            tools:text="ID" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.title}"
+            tools:text="タイトル" />
     </LinearLayout>
 </layout>

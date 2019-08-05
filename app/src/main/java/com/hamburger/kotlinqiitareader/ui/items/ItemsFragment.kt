@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ItemsFragmentBinding
+import com.hamburger.kotlinqiitareader.service.ItemDTO
+import com.hamburger.kotlinqiitareader.ui.item.ItemActivity
 
-class ItemsFragment : Fragment() {
+class ItemsFragment : Fragment(), ItemsDelegate {
 
     companion object {
         fun newInstance() = ItemsFragment()
@@ -20,7 +22,7 @@ class ItemsFragment : Fragment() {
     private lateinit var viewModel: ItemsViewModel
 
     private val controller: ItemsEpoxyController by lazy {
-        ItemsEpoxyController()
+        ItemsEpoxyController(this)
     }
 
     private lateinit var binding: ItemsFragmentBinding
@@ -50,5 +52,11 @@ class ItemsFragment : Fragment() {
         viewModel.networkState.observe(this, Observer {
             binding.networkState = it
         })
+    }
+
+    override fun onClickItem(item: ItemDTO) {
+        context?.let {
+            it.startActivity(ItemActivity.newIntent(it, item))
+        }
     }
 }

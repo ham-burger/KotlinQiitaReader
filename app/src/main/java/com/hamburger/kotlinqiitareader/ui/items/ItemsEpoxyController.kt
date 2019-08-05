@@ -6,10 +6,12 @@ import com.hamburger.kotlinqiitareader.ItemCellBindingModel_
 import com.hamburger.kotlinqiitareader.service.ItemDTO
 
 class ItemsEpoxyController(
+        val delegate: ItemsDelegate
 ) : PagedListEpoxyController<ItemDTO>() {
     override fun buildItemModel(currentPosition: Int, item: ItemDTO?): EpoxyModel<*> {
         return ItemCellBindingModel_()
-            .title(item?.title ?: "")
-            .id("item$currentPosition")
+                .item(item)
+                .delegate(delegate)
+                .id("item$currentPosition")
     }
 }
