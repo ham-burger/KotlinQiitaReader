@@ -3,9 +3,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
 >
     <data>
+        <import type="com.hamburger.kotlinqiitareader.service.paging.NetworkState"/>
+        <variable
+                name="networkState"
+                type="com.hamburger.kotlinqiitareader.service.paging.NetworkState"
+        />
     </data>
 
-    <FrameLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
     >
@@ -14,5 +19,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
         />
-    </FrameLayout>
+
+        <ProgressBar
+                isExist="@{networkState == NetworkState.RUNNING}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+        />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="通信エラー"
+                  android:layout_centerHorizontal="true"
+                  android:layout_alignParentBottom="true"
+                  isExist="@{networkState == NetworkState.FAILED}"
+        />
+    </RelativeLayout>
 </layout>

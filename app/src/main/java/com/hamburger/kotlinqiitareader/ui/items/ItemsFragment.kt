@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ItemsFragmentBinding
-import timber.log.Timber
 
 class ItemsFragment : Fragment() {
 
@@ -49,7 +48,7 @@ class ItemsFragment : Fragment() {
             controller.submitList(it)
         })
         viewModel.networkState.observe(this, Observer {
-            Timber.d("state : ${it.name}")
+            binding.networkState = it
         })
     }
 }

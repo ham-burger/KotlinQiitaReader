@@ -6,7 +6,6 @@ import com.hamburger.kotlinqiitareader.extension.observeOnMainThread
 import com.hamburger.kotlinqiitareader.extension.subscribeOnIOThread
 import com.hamburger.kotlinqiitareader.service.ItemDTO
 import com.hamburger.kotlinqiitareader.service.ItemWebApi
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import timber.log.Timber
@@ -37,18 +36,21 @@ class PageKeyedItemsDataSource(private val api: ItemWebApi) : PageKeyedDataSourc
     private fun callAPI(page: Int, perPage: Int, callback: (repos: List<ItemDTO>, next: Int?) -> Unit) {
         networkState.postValue(NetworkState.RUNNING)
         try {
-            api.request.get(page)
-                .onErrorResumeNext { e: Throwable ->
-                    Timber.e(e.message)
-                    Observable.just(listOf<ItemDTO>())
-                }
+            api.request.get(page, perPage)
                 .subscribeOnIOThread()
                 .observeOnMainThread()
-                .subscribe {
-                    // TODO: 次ページが有るか判定する
-                    callback(it, page + 1)
+                .subscribe({
+                    if (it.isSuccessful) {
+                        val lastPage = it.headers()["total-count"]?.toIntOrNull()?.plus(1)
+                        val next = if (page == lastPage) null else page + 1
+                        callback(it.body(), next)
+                    } else {
+                        networkState.postValue(NetworkState.FAILED)
+                    }
                     networkState.postValue(NetworkState.SUCCESS)
-                }
+                }, {
+                    networkState.postValue(NetworkState.FAILED)
+                })
                 .addTo(compositeDisposable)
         } catch (e: IOException) {
             Timber.w(e)

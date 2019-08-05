@@ -11,7 +11,7 @@ import com.hamburger.kotlinqiitareader.service.paging.NetworkState
 
 class ItemsViewModel : ViewModel() {
     companion object {
-        private const val PAGE_SIZE = 50
+        private const val PAGE_SIZE = 100
     }
 
     var data: LiveData<PagedList<ItemDTO>>
