@@ -4,4 +4,5 @@ import com.hamburger.kotlinqiitareader.service.ItemDTO
 
 interface ItemsDelegate {
     fun onClickItem(item: ItemDTO)
+    fun onClickLogin()
 }

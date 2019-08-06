@@ -1,5 +1,7 @@
 package com.hamburger.kotlinqiitareader.ui.items
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +12,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ItemsFragmentBinding
+import com.hamburger.kotlinqiitareader.service.Constants
 import com.hamburger.kotlinqiitareader.service.ItemDTO
 import com.hamburger.kotlinqiitareader.ui.item.ItemActivity
+
 
 class ItemsFragment : Fragment(), ItemsDelegate {
 
@@ -37,6 +41,7 @@ class ItemsFragment : Fragment(), ItemsDelegate {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = ItemsFragmentBinding.bind(view)
+        binding.delegate = this
         binding.recyclerView.adapter = controller.adapter
         if (binding.recyclerView.layoutManager == null) {
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -58,5 +63,13 @@ class ItemsFragment : Fragment(), ItemsDelegate {
         context?.let {
             it.startActivity(ItemActivity.newIntent(it, item))
         }
+    }
+
+    override fun onClickLogin() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(Constants.authorizeUrl)
+        }
+        startActivity(intent)
+
     }
 }
