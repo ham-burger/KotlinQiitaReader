@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.hamburger.kotlinqiitareader.service.ItemDTO" />
+            type="com.hamburger.kotlinqiitareader.service.dto.ItemDTO" />
 
         <variable
             name="delegate"

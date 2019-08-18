@@ -1,4 +1,6 @@
-package com.hamburger.kotlinqiitareader.service
+package com.hamburger.kotlinqiitareader.service.web_api
+
+import com.hamburger.kotlinqiitareader.service.Environment
 
 
 data class WebAPIUrl(val path: String = "") {

@@ -1,5 +1,6 @@
-package com.hamburger.kotlinqiitareader.service
+package com.hamburger.kotlinqiitareader.service.web_api
 
+import com.hamburger.kotlinqiitareader.service.GsonHolder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,6 +27,12 @@ object WebAPIClient {
             it.proceed(
                 it.request()
                     .newBuilder()
+                    .apply {
+                        val keyValue = WebRequestHeaderConfig.authorizationKeyValue
+                        if (keyValue.second.isNotBlank()) {
+                            addHeader(keyValue.first, keyValue.second)
+                        }
+                    }
                     .build()
             )
         }

@@ -1,5 +1,6 @@
-package com.hamburger.kotlinqiitareader.service
+package com.hamburger.kotlinqiitareader.service.web_api
 
+import com.hamburger.kotlinqiitareader.service.dto.ItemDTO
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET

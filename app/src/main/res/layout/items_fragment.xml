@@ -3,47 +3,35 @@
 
     <data>
 
-        <import type="com.hamburger.kotlinqiitareader.service.paging.NetworkState" />
+        <import type="com.hamburger.kotlinqiitareader.service.paging.NetworkState"/>
 
         <variable
-            name="networkState"
-            type="com.hamburger.kotlinqiitareader.service.paging.NetworkState" />
-
-        <variable
-            name="delegate"
-            type="com.hamburger.kotlinqiitareader.ui.items.ItemsDelegate" />
+                name="networkState"
+                type="com.hamburger.kotlinqiitareader.service.paging.NetworkState"/>
     </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         <ProgressBar
-            isExist="@{networkState == NetworkState.RUNNING}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+                isExist="@{networkState == NetworkState.RUNNING}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
 
         <TextView
-            isExist="@{networkState == NetworkState.FAILED}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="通信エラー" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:onClick="@{() -> delegate.onClickLogin()}"
-            android:text="ログイン" />
+                isExist="@{networkState == NetworkState.FAILED}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="通信エラー"/>
     </RelativeLayout>
 </layout>

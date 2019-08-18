@@ -3,7 +3,7 @@ package com.hamburger.kotlinqiitareader.ui.items
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.hamburger.kotlinqiitareader.ItemCellBindingModel_
-import com.hamburger.kotlinqiitareader.service.ItemDTO
+import com.hamburger.kotlinqiitareader.service.dto.ItemDTO
 
 class ItemsEpoxyController(
         val delegate: ItemsDelegate

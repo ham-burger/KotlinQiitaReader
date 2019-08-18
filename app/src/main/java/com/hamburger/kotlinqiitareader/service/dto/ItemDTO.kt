@@ -1,4 +1,4 @@
-package com.hamburger.kotlinqiitareader.service
+package com.hamburger.kotlinqiitareader.service.dto
 
 import java.io.Serializable
 

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ActivityItemBinding
-import com.hamburger.kotlinqiitareader.service.ItemDTO
+import com.hamburger.kotlinqiitareader.service.dto.ItemDTO
 
 class ItemActivity : AppCompatActivity() {
 

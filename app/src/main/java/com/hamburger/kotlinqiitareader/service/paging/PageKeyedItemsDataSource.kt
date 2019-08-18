@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.hamburger.kotlinqiitareader.extension.observeOnMainThread
 import com.hamburger.kotlinqiitareader.extension.subscribeOnIOThread
-import com.hamburger.kotlinqiitareader.service.ItemDTO
-import com.hamburger.kotlinqiitareader.service.ItemWebApi
+import com.hamburger.kotlinqiitareader.service.dto.ItemDTO
+import com.hamburger.kotlinqiitareader.service.web_api.ItemWebApi
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import timber.log.Timber
