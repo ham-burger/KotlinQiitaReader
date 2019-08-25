@@ -70,4 +70,9 @@ dependencies {
     // Markwon
     implementation "io.noties.markwon:core:4.0.2"
 
+    // glide
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+    implementation "com.github.bumptech.glide:annotations:4.9.0"
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
+    kapt "com.github.bumptech.glide:compiler:4.9.0"
 }

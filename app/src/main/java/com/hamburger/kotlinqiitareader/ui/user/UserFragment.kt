@@ -31,5 +31,8 @@ class UserFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         binding.viewModel = viewModel
+//        viewModel.authenticatedUserDTO.observe(this, Observer {
+//
+//        })
     }
 }

@@ -13,7 +13,8 @@ import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ItemsFragmentBinding
 import com.hamburger.kotlinqiitareader.service.dto.ItemDTO
 import com.hamburger.kotlinqiitareader.ui.item.ItemActivity
-
+import com.hamburger.kotlinqiitareader.ui.user.UserActivity
+import java.lang.ref.WeakReference
 
 class ItemsFragment : Fragment(), ItemsDelegate {
 
@@ -40,8 +41,8 @@ class ItemsFragment : Fragment(), ItemsDelegate {
     private lateinit var binding: ItemsFragmentBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.items_fragment, container, false)
     }
@@ -57,26 +58,26 @@ class ItemsFragment : Fragment(), ItemsDelegate {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, ItemsViewModel.Factory(code)).get(ItemsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ItemsViewModel.Factory(code, WeakReference(this)))
+                .get(ItemsViewModel::class.java)
         viewModel.data.observe(this, Observer {
             controller.submitList(it)
         })
         viewModel.networkState.observe(this, Observer {
             binding.networkState = it
         })
-        viewModel.showSnackBarEvent.observe(this, Observer { message ->
-            context?.let {
-                Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
-            }
-        })
-        code?.let {
-            viewModel.getAccessToken()
-        }
     }
 
     override fun onClickItem(item: ItemDTO) {
         context?.let {
             it.startActivity(ItemActivity.newIntent(it, item))
+        }
+    }
+
+    override fun onSuccessLogin() {
+        context?.let {
+            Toast.makeText(it, "ログインしました", Toast.LENGTH_SHORT).show()
+            it.startActivity(UserActivity.newIntent(it))
         }
     }
 }

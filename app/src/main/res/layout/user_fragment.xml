@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
 
 >
+
     <data>
+
         <variable
                 name="viewModel"
                 type="com.hamburger.kotlinqiitareader.ui.user.UserViewModel"
@@ -15,5 +18,39 @@
             android:orientation="vertical"
     >
 
+        <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                imageUrl="@{viewModel.authenticatedUserDTO.profileImageUrl}"
+                tools:src="@mipmap/ic_launcher"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.authenticatedUserDTO.id}"
+                tools:text="test user"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.authenticatedUserDTO.name}"
+                tools:text="テストユーザー"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.authenticatedUserDTO.organization}"
+                tools:text="株式会社ほげほげ"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.authenticatedUserDTO.description}"
+                tools:text="android developer"
+        />
     </LinearLayout>
 </layout>
