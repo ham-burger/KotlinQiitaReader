@@ -15,7 +15,6 @@ import com.hamburger.kotlinqiitareader.service.repository.RepositoryHolder
 import com.hamburger.kotlinqiitareader.ui.items.ItemsFragment
 import com.hamburger.kotlinqiitareader.ui.user.UserActivity
 import com.hamburger.kotlinqiitareader.ui.util.FragmentChangeable
-import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity(), FragmentChangeable {
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity(), FragmentChangeable {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.login -> onClickLogin()
-            R.id.logout -> Timber.d("logout")
             R.id.user_info -> startActivity(UserActivity.newIntent(this))
         }
         return super.onOptionsItemSelected(item)
