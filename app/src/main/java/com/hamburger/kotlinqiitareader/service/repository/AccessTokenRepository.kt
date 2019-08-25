@@ -18,4 +18,8 @@ class AccessTokenRepository(context: Context) {
     val accessToken get() = sharedPreferences.getString(keyAccessToken, "")
 
     val isLogin get() = !accessToken.isNullOrBlank()
+
+    fun deleteAccessToken() {
+        sharedPreferences.edit().remove(keyAccessToken).apply()
+    }
 }

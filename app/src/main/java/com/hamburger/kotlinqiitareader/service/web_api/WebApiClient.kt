@@ -1,6 +1,7 @@
 package com.hamburger.kotlinqiitareader.service.web_api
 
 import com.hamburger.kotlinqiitareader.service.GsonHolder
+import com.hamburger.kotlinqiitareader.service.repository.RepositoryHolder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,18 +26,19 @@ object WebAPIClient {
 
         clientBuilder.addInterceptor {
             it.proceed(
-                it.request()
-                    .newBuilder()
-                    .apply {
-                        val keyValue = WebRequestHeaderConfig.authorizationKeyValue
-                        if (keyValue.second.isNotBlank()) {
-                            addHeader(keyValue.first, keyValue.second)
-                        }
-                    }
-                    .build()
+                    it.request()
+                            .newBuilder()
+                            .apply {
+                                if (RepositoryHolder.accessTokenRepository.isLogin) {
+                                    val keyValue = WebRequestHeaderConfig.authorizationKeyValue
+                                    if (keyValue.second.isNotBlank()) {
+                                        addHeader(keyValue.first, keyValue.second)
+                                    }
+                                }
+                            }
+                            .build()
             )
         }
-
 
         val timeoutValue = 10L
         clientBuilder.connectTimeout(timeoutValue, TimeUnit.SECONDS)
@@ -44,11 +46,11 @@ object WebAPIClient {
         clientBuilder.writeTimeout(timeoutValue, TimeUnit.SECONDS)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(WebAPIUrl.baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(GsonHolder.gson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(clientBuilder.build())
-            .build()
+                .baseUrl(WebAPIUrl.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create(GsonHolder.gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(clientBuilder.build())
+                .build()
 
         return retrofit
     }

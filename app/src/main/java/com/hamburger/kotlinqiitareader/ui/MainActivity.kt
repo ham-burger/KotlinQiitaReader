@@ -16,14 +16,13 @@ import com.hamburger.kotlinqiitareader.ui.items.ItemsFragment
 import com.hamburger.kotlinqiitareader.ui.user.UserActivity
 import com.hamburger.kotlinqiitareader.ui.util.FragmentChangeable
 
-
 class MainActivity : AppCompatActivity(), FragmentChangeable {
     override val fragmentManager: FragmentManager get() = supportFragmentManager
     override val fragmentFoundationId: Int get() = R.id.container
     private val binding: ActivityMainBinding by lazy {
         DataBindingUtil.setContentView<ActivityMainBinding>(
-            this,
-            R.layout.activity_main
+                this,
+                R.layout.activity_main
         )
     }
     private val deepLinkUri: Uri? by lazy { intent.data }
@@ -35,6 +34,11 @@ class MainActivity : AppCompatActivity(), FragmentChangeable {
         if (savedInstanceState == null) {
             replaceFragment(ItemsFragment.newInstance(deepLinkUri?.getQueryParameter("code")))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,7 +70,7 @@ class MainActivity : AppCompatActivity(), FragmentChangeable {
     private fun onClickLogin() {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             val authorizeUrl =
-                "https://qiita.com/api/v2/oauth/authorize?client_id=${BuildConfig.qiitaClientId}&scope=read_qiita"
+                    "https://qiita.com/api/v2/oauth/authorize?client_id=${BuildConfig.qiitaClientId}&scope=read_qiita"
             data = Uri.parse(authorizeUrl)
         }
         startActivity(intent)

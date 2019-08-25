@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.UserFragmentBinding
+import java.lang.ref.WeakReference
 
-class UserFragment : Fragment() {
+class UserFragment : Fragment(), UserDelegate {
     companion object {
         fun newInstance() = UserFragment()
     }
@@ -19,8 +20,8 @@ class UserFragment : Fragment() {
     private lateinit var binding: UserFragmentBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.user_fragment, container, false)
         binding.lifecycleOwner = this
@@ -29,10 +30,11 @@ class UserFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, UserViewModel.Factory(WeakReference(this))).get(UserViewModel::class.java)
         binding.viewModel = viewModel
-//        viewModel.authenticatedUserDTO.observe(this, Observer {
-//
-//        })
+    }
+
+    override fun onSuccessLogout() {
+        activity?.finish()
     }
 }

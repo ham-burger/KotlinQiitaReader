@@ -9,7 +9,7 @@ class UserWebApi {
     interface Request {
         @GET("authenticated_user.json")
         fun get(): Observable<Response<AuthenticatedUserDTO>>
-    }
+   }
 
     val request: Request
         get() = WebAPIClient.retrofit.create(Request::class.java)
