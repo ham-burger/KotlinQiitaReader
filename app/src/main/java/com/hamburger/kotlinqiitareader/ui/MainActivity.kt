@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import com.hamburger.kotlinqiitareader.BuildConfig
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ActivityMainBinding
+import com.hamburger.kotlinqiitareader.service.repository.RepositoryHolder
 import com.hamburger.kotlinqiitareader.ui.items.ItemsFragment
 import com.hamburger.kotlinqiitareader.ui.user.UserActivity
 import com.hamburger.kotlinqiitareader.ui.util.FragmentChangeable
@@ -49,6 +50,19 @@ class MainActivity : AppCompatActivity(), FragmentChangeable {
             R.id.user_info -> startActivity(UserActivity.newIntent(this))
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.let {
+            val isLogin = RepositoryHolder.accessTokenRepository.isLogin
+            it.findItem(R.id.login).apply {
+                isVisible = !isLogin
+            }
+            it.findItem(R.id.user_info).apply {
+                isVisible = isLogin
+            }
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     private fun onClickLogin() {
