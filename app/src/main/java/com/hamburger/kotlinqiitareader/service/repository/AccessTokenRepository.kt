@@ -2,7 +2,6 @@ package com.hamburger.kotlinqiitareader.service.repository
 
 import android.content.Context
 import io.reactivex.Observable
-import timber.log.Timber
 import java.io.IOException
 
 class AccessTokenRepository(context: Context) {
@@ -12,10 +11,11 @@ class AccessTokenRepository(context: Context) {
         if (sharedPreferences.edit().putString(keyAccessToken, token).commit()) {
             emitter.onNext(Unit)
         } else {
-            Timber.d("SharedPreferenceの保存に失敗しました。")
             emitter.onError(IOException("SharedPreferenceの保存に失敗しました。"))
         }
     }
 
     val accessToken get() = sharedPreferences.getString(keyAccessToken, "")
+
+    val isLogin get() = !accessToken.isNullOrBlank()
 }

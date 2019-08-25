@@ -8,5 +8,5 @@
             android:title="ログアウト(TODO)"/>
     <item
             android:id="@+id/user_info"
-            android:title="ユーザ情報(TODO)"/>
+            android:title="ユーザ情報"/>
 </menu>

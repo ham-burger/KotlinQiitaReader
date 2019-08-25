@@ -12,6 +12,7 @@ import com.hamburger.kotlinqiitareader.BuildConfig
 import com.hamburger.kotlinqiitareader.R
 import com.hamburger.kotlinqiitareader.databinding.ActivityMainBinding
 import com.hamburger.kotlinqiitareader.ui.items.ItemsFragment
+import com.hamburger.kotlinqiitareader.ui.user.UserActivity
 import com.hamburger.kotlinqiitareader.ui.util.FragmentChangeable
 import timber.log.Timber
 
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity(), FragmentChangeable {
         when (item.itemId) {
             R.id.login -> onClickLogin()
             R.id.logout -> Timber.d("logout")
-            R.id.user_info -> Timber.d("user_info")
+            R.id.user_info -> startActivity(UserActivity.newIntent(this))
         }
         return super.onOptionsItemSelected(item)
     }
