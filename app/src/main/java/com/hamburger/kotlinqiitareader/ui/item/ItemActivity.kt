@@ -3,6 +3,7 @@ package com.hamburger.kotlinqiitareader.ui.item
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.hamburger.kotlinqiitareader.R
@@ -21,6 +22,14 @@ class ItemActivity : AppCompatActivity(), FragmentChangeable {
         if (savedInstanceState == null) {
             replaceFragment(ItemFragment.newInstance(id))
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        android.R.id.home -> {
+            finish()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
