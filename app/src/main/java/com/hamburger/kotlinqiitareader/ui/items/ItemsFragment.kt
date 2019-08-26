@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,7 +18,6 @@ import com.hamburger.kotlinqiitareader.ui.user.UserActivity
 import java.lang.ref.WeakReference
 
 class ItemsFragment : Fragment(), ItemsDelegate {
-
     companion object {
         private const val keyCode = "keyCode"
         fun newInstance(code: String?) = ItemsFragment().also {
@@ -30,6 +30,7 @@ class ItemsFragment : Fragment(), ItemsDelegate {
     }
 
     private lateinit var viewModel: ItemsViewModel
+    private lateinit var binding: ItemsFragmentBinding
     private val code: String? by lazy {
         arguments?.getString(keyCode, null)
     }
@@ -38,18 +39,18 @@ class ItemsFragment : Fragment(), ItemsDelegate {
         ItemsEpoxyController(this)
     }
 
-    private lateinit var binding: ItemsFragmentBinding
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.items_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.items_fragment, container, false)
+        binding.lifecycleOwner = this
+        return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = ItemsFragmentBinding.bind(view)
         binding.recyclerView.adapter = controller.adapter
         if (binding.recyclerView.layoutManager == null) {
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -70,7 +71,7 @@ class ItemsFragment : Fragment(), ItemsDelegate {
 
     override fun onClickItem(item: ItemDTO) {
         context?.let {
-            it.startActivity(ItemActivity.newIntent(it, item))
+            it.startActivity(ItemActivity.newIntent(it, item.id))
         }
     }
 

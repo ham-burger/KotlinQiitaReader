@@ -36,7 +36,7 @@ class PageKeyedItemsDataSource(private val api: ItemWebApi) : PageKeyedDataSourc
     private fun callAPI(page: Int, perPage: Int, callback: (repos: List<ItemDTO>, next: Int?) -> Unit) {
         networkState.postValue(NetworkState.RUNNING)
         try {
-            api.request.get(page, perPage)
+            api.request.index(page, perPage)
                 .subscribeOnIOThread()
                 .observeOnMainThread()
                 .subscribe({

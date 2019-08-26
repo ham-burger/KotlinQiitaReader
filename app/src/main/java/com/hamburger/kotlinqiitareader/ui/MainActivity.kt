@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import com.hamburger.kotlinqiitareader.BuildConfig
 import com.hamburger.kotlinqiitareader.R
-import com.hamburger.kotlinqiitareader.databinding.ActivityMainBinding
 import com.hamburger.kotlinqiitareader.service.repository.RepositoryHolder
 import com.hamburger.kotlinqiitareader.ui.items.ItemsFragment
 import com.hamburger.kotlinqiitareader.ui.user.UserActivity
@@ -19,12 +17,6 @@ import com.hamburger.kotlinqiitareader.ui.util.FragmentChangeable
 class MainActivity : AppCompatActivity(), FragmentChangeable {
     override val fragmentManager: FragmentManager get() = supportFragmentManager
     override val fragmentFoundationId: Int get() = R.id.container
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(
-                this,
-                R.layout.activity_main
-        )
-    }
     private val deepLinkUri: Uri? by lazy { intent.data }
 
     override fun onCreate(savedInstanceState: Bundle?) {

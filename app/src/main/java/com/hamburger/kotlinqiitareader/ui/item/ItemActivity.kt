@@ -4,33 +4,30 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import com.hamburger.kotlinqiitareader.R
-import com.hamburger.kotlinqiitareader.databinding.ActivityItemBinding
-import com.hamburger.kotlinqiitareader.service.dto.ItemDTO
+import com.hamburger.kotlinqiitareader.ui.util.FragmentChangeable
 
-class ItemActivity : AppCompatActivity() {
+class ItemActivity : AppCompatActivity(), FragmentChangeable {
+    override val fragmentManager: FragmentManager get() = supportFragmentManager
+    override val fragmentFoundationId: Int get() = R.id.container
 
-    private val binding: ActivityItemBinding by lazy {
-        DataBindingUtil.setContentView<ActivityItemBinding>(
-            this,
-            R.layout.activity_item
-        )
-    }
-    private val item by lazy { intent.getSerializableExtra(keyItemDTO) as ItemDTO }
+    private val id by lazy { intent.getStringExtra(keyId) ?: "" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_item)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = item.title
-        binding.body = item.body
+        if (savedInstanceState == null) {
+            replaceFragment(ItemFragment.newInstance(id))
+        }
     }
 
     companion object {
-        private const val keyItemDTO = "keyItemDTO"
-        fun newIntent(context: Context, itemDTO: ItemDTO): Intent {
+        private const val keyId = "keyId"
+        fun newIntent(context: Context, id: String): Intent {
             return Intent(context, ItemActivity::class.java).also {
-                it.putExtra(keyItemDTO, itemDTO)
+                it.putExtra(keyId, id)
             }
         }
     }

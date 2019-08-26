@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import io.noties.markwon.Markwon
 
 @BindingAdapter("markdown")
-fun TextView.setMarkdown(body: String) {
+fun TextView.setMarkdown(body: String?) {
+    body ?: return
     Markwon.create(context).setMarkdown(this, body)
 }
